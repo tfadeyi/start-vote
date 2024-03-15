@@ -1,0 +1,87 @@
+# trigger voting action.yml
+name: start-voting
+author: tfadeyi
+description: 'Add a simple voting mechanism through github discussions'
+branding:
+  icon: 'package'
+  color: 'blue'
+inputs:
+  voting:
+    description: 'Voting methodology to use for the vote'
+    required: false
+    default: 'simple-majority'
+  duration:
+    description: 'Duration of the current vote'
+    required: false
+    default: '24h'
+  title:
+    description: 'Title of the proposal'
+    required: true
+    default: ''
+  proposal:
+    description: 'The proposal that is being voted on'
+    required: true
+    default: ''
+  participants:
+    description: 'Name of the users that will participate in the voting'
+    required: true
+    default: ''
+  platform:
+    description: 'The platform where the voting will take place'
+    required: false
+    default: 'github'
+  yes:
+    description: 'The value to return for positive vote outcomes'
+    required: true
+    default: ''
+  instance:
+    description: 'The instance unique identifier'
+    required: false
+    default: "${{ github.run_id }}"
+  # github specific flags
+  token:
+    description: 'The github auth token'
+    required: false
+    default: "${{ github.token }}"
+  category:
+    description: 'The github discussion category name, i.e: general'
+    required: true
+    default: ''
+  owner:
+    description: 'The name of the repository owner'
+    required: false
+    default: "${{ github.repository_owner }}"
+  repository:
+    description: 'The name of the repository'
+    required: false
+    default: "${{ github.repository }}"
+runs:
+  using: 'docker'
+  image: 'docker://ghcr.io/tfadeyi/governance'
+  args:
+    - "vote"
+    - "start"
+    - "--platform"
+    - ${{ inputs.platform }}
+    - "--voting"
+    - ${{ inputs.voting }}
+    - "--instance"
+    - ${{ inputs.instance }}
+    - "--github.category"
+    - ${{ inputs.category }}
+    - "--github.repository"
+    - ${{ inputs.repository }}
+    - "--github.repository-owner"
+    - ${{ inputs.owner }}
+    - "--github.token"
+    - ${{ inputs.token }}
+    - "--title"
+    - ${{ inputs.title }}
+    - "--participants"
+    - ${{ inputs.participants }}
+    - "--proposal"
+    - ${{ inputs.proposal }}
+    - "--end"
+    - ${{ inputs.duration }}
+    - "--yes"
+    - ${{ inputs.yes }}
