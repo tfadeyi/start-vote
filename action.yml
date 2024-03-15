@@ -1,5 +1,5 @@
 # trigger voting action.yml
-name: start-voting
+name: start-vote
 author: tfadeyi
 description: 'Add a simple voting mechanism through github discussions'
 branding:
