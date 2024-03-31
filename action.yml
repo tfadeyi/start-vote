@@ -60,7 +60,7 @@ runs:
   image: 'docker://ghcr.io/tfadeyi/governance'
   args:
     - "vote"
-    - "start"
+    - "monitoring"
     - "--platform"
     - ${{ inputs.platform }}
     - "--voting"
